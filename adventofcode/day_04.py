@@ -21,7 +21,6 @@ def validate(field):
         return 1920 <= value <= 2002
     if key == 'iyr':
         value = int(value)
-
         return 2010 <= value <= 2020
     if key == 'eyr':
         value = int(value)
@@ -43,6 +42,7 @@ def validate(field):
     if key == "pid":
         regex = r"[0-9]{9}"
         return all([len(value) == 9, bool(re.search(regex, value))])
+    return False
 
 
 valid = 0
