@@ -9,11 +9,11 @@ def get_seat_id(row, col):
     return row * 8 + col
 
 
-def chop(half, rows):
+def chop(half, row_or_col):
     if half == 'F' or half == "L":
-        return rows[:int((len(rows) - 1) / 2 + 1)]
+        return row_or_col[:int((len(row_or_col) - 1) / 2 + 1)]
     if half == 'B' or half == "R":
-        return rows[int((len(rows) - 1) / 2 + 1):]
+        return row_or_col[int((len(row_or_col) - 1) / 2 + 1):]
 
 
 all_seat_ids = set()
