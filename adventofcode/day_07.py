@@ -100,6 +100,7 @@ class Tree:
             ][0] for item in tree.allowed_storage.items()
         ]
         self.tree.update({tree: kids})
+        tree.child_count = 0
         for item in kids:
 
             self.populate_tree(item)
