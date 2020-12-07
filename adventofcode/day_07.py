@@ -62,18 +62,16 @@ for bag in bag_list:
         part_one_colors.append(bag)
 
 # who has time for recursion
-# for x in range(5):
-#     print(x)
-#     for b in bag_list:
-#         for c in part_one_colors:
-#             if c.name in b.allowed_storage:
-#                 part_one_colors.append(b)
-
+for x in range(5):
+    print(x)
+    for b in bag_list:
+        for c in part_one_colors:
+            if c.name in b.allowed_storage:
+                part_one_colors.append(b)
 
 colors = set(part_one_colors)
 colors_two = set(bag_list_two)
 
-# print(colors)
 print("Part 1: ", len(colors))
 
 my_bag = [i for i in colors_two if i.name == 'shiny gold'][0]
@@ -118,4 +116,4 @@ t.populate_tree()
 
 for item in t.tree:
     if item == t.start:
-        print(item, item.child_count)
+        print("Part 2: ", item, item.child_count)
