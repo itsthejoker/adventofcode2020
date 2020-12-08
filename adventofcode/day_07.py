@@ -63,7 +63,7 @@ for bag in bag_list:
 
 # who has time for recursion
 for x in range(5):
-    print(x)
+    print("Working...")
     for b in bag_list:
         for c in part_one_colors:
             if c.name in b.allowed_storage:
