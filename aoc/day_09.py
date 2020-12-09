@@ -14,6 +14,6 @@ for count, num in enumerate(input):
         print("Found the number that doesn't belong")
         print(f"{count=}, {num=}")
         for window in range(600):
-            for c in range(len(input)):
+            for c in range(len(input[preamble_length:count])):
                 if sum(input[c:c+window]) == num:
                     print("Possible answer: ", min(input[c:c+window])+max(input[c:c+window]))
