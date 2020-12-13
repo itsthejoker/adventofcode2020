@@ -1,56 +1,59 @@
+from typing import List
+
 from data import load_data
 
 input = load_data()
 
 input = [i for i in input.split('\n') if i != '']
-CURRENT_DIRECTION = "E"
-L_DIRECTIONS = ["E", "N", "W", "S"]
-R_DIRECTIONS = ["E", "S", "W", "N"]
+# CURRENT_DIRECTION = "E"
+# L_DIRECTIONS = ["E", "N", "W", "S"]
+# R_DIRECTIONS = ["E", "S", "W", "N"]
 
 # [n/s, w/e]
 CURRENT_LOCATION = [0, 0]
 WAYPOINT_LOCATION = [1, 10]
 
-def turn(current_dir: str, directive: str, amount: int) -> str:
+
+def turn(waypoint_loc: List, directive: str, amount: int) -> List:
+    def toggle_abs(val):
+        if val >= 0:
+            return -abs(val)
+        else:
+            return abs(val)
+
     steps = int((amount / 90) % 4)
+
     if directive == "L":
-        directions = L_DIRECTIONS
+        for _ in range(steps):
+            waypoint_loc = [waypoint_loc[1], toggle_abs(waypoint_loc[0])]
     elif directive == "R":
-        directions = R_DIRECTIONS
-    window_of_directions = (directions+directions)[
-        directions.index(current_dir):directions.index(current_dir)+4
-    ]
-    return window_of_directions[steps]
+        for _ in range(steps):
+            waypoint_loc = [toggle_abs(waypoint_loc[1]), waypoint_loc[0]]
+
+    return waypoint_loc
 
 
-def move(current_loc, directive, amount):
+def move(waypoint_loc: List, current_loc: List, directive, amount) -> [List, List]:
     if directive == "N":
-        current_loc[0] += amount
+        waypoint_loc[0] += amount
     elif directive == "S":
-        current_loc[0] -= amount
+        waypoint_loc[0] -= amount
     elif directive == "E":
-        current_loc[1] += amount
+        waypoint_loc[1] += amount
     elif directive == "W":
-        current_loc[1] -= amount
+        waypoint_loc[1] -= amount
     elif directive == "F":
-        if CURRENT_DIRECTION == "N":
-            current_loc[0] += amount
-        elif CURRENT_DIRECTION == "S":
-            current_loc[0] -= amount
-        elif CURRENT_DIRECTION == "E":
-            current_loc[1] += amount
-        elif CURRENT_DIRECTION == "W":
-            current_loc[1] -= amount
-    return current_loc
-
+        for _ in range(amount):
+            current_loc = [current_loc[0] + waypoint_loc[0], current_loc[1] + waypoint_loc[1]]
+    return waypoint_loc, current_loc
 
 for instruction in input:
     directive = instruction[:1].upper()
     amount = int(instruction[1:])
     if "L" in directive or "R" in directive:
-        CURRENT_DIRECTION = turn(CURRENT_DIRECTION, directive, amount)
+        WAYPOINT_LOCATION = turn(WAYPOINT_LOCATION, directive, amount)
     else:
-        CURRENT_LOCATION = move(CURRENT_LOCATION, directive, amount)
+        WAYPOINT_LOCATION, CURRENT_LOCATION = move(WAYPOINT_LOCATION, CURRENT_LOCATION, directive, amount)
 
 print(abs(CURRENT_LOCATION[0]), abs(CURRENT_LOCATION[1]))
 print("--> ", abs(CURRENT_LOCATION[0]) + abs(CURRENT_LOCATION[1]))
